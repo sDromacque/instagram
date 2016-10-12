@@ -3,7 +3,7 @@ var express = require('express'),
 ;
 
 router.new = function(req, res){
-    res.render('picture/new', {title: "Add new picture"});
+    res.render('picture/new',  { what: 'best', who: 'me' });
 };
 
 router.index = function (req, res) {
