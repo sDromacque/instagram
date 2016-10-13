@@ -1,9 +1,12 @@
 var express    = require('express'),
     router     = express.Router(),
-    controller = require('../app/controller/pictureController')
+    controller = require('../app/controller/pictureController'),
+    multipart = require('connect-multiparty'),
+    multipartMiddleware = multipart(),
+    Picture = require('../app/models/Picture')
 ;
 
 router.get('/', controller.index);
-router.get('/new', controller.new);
+router.get('/new', multipartMiddleware, controller.new);
 
 module.exports = router;

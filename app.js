@@ -7,8 +7,15 @@ var bodyParser = require('body-parser');
 var engine = require('ejs-mate');
 var routes = require('./routes/index');
 var picture = require('./routes/picture');
-require('@risingstack/trace');
 var app = express();
+var mongoose = require('mongoose');
+
+require('@risingstack/trace');
+
+mongoose.connect('mongodb://localhost/instagram', function(error){
+  if(error) console.log(error);
+  console.log("connection successful");
+});
 
 // view engine setup
 app.engine('ejs', engine);
