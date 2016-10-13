@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var engine = require('ejs-mate');
 var routes = require('./routes/index');
 var picture = require('./routes/picture');
-
+require('@risingstack/trace');
 var app = express();
 
 // view engine setup
