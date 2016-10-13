@@ -12,28 +12,32 @@ cloudinary.config({
 });
 
 router.new = function(req, res){
-    cloudinary.uploader.upload("https://pixabay.com/static/uploads/photo/2015/10/01/21/39/background-image-967820_960_720.jpg", function(result){
-        var picture = new Picture({
-            title: 'lqkds',
-            description: 'qdslkdsqml',
-            image: 'qddqs',
-            image_id: 'dqdsq',
-            created_at: new Date()
-        });
-        picture.save(function(err){
-            if(err){
-                res.send(err);
-            }
-            res.redirect('/');
-        });
-        console.log(result)
-    });
     res.render('picture/new',  { what: 'best', who: 'me'});
+};
+
+router.create = function (req, res) {
+    cloudinary.uploader.upload(req.files.image,
+        function(err, result){
+            console.log(result);
+            // var picture = new Picture({
+            //     title: req.body.title,
+            //     description: req.body.description,
+            //     image: req.body.image,
+            //     created_at: new Date()
+            // });
+            picture.save(function (err) {
+                if(err){
+                    res.send(err)
+                }
+                res.redirect('/');
+            });
+        }
+    );
 };
 
 
 router.index = function (req, res, next) {
-
+    res.json({ what: 'best', who: 'me'});
 };
 
 module.exports = router;
