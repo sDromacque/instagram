@@ -8,5 +8,6 @@ var express    = require('express'),
 
 router.get('/', controller.index);
 router.get('/new', multipartMiddleware, controller.new);
+router.post('/create', multipartMiddleware, controller.create);
 
 module.exports = router;

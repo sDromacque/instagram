@@ -1,7 +1,6 @@
 var express = require('express'),
     router  = express.Router(),
     cloudinary = require('cloudinary'),
-    mongoose = require('mongoose'),
     Picture = require('../models/Picture')
 ;
 
@@ -12,27 +11,29 @@ cloudinary.config({
 });
 
 router.new = function(req, res){
-    res.render('picture/new',  { what: 'best', who: 'me'});
+    res.render('picture/new');
 };
 
 router.create = function (req, res) {
-    cloudinary.uploader.upload(req.files.image,
-        function(err, result){
+    cloudinary.v2.uploader.upload(req.files.image.path,
+        { width: 300, height: 300, crop: "limit", tags: req.body.tags, moderation:'manual' },
+        function(err, result) {
             console.log(result);
-            // var picture = new Picture({
-            //     title: req.body.title,
-            //     description: req.body.description,
-            //     image: req.body.image,
-            //     created_at: new Date()
-            // });
-            picture.save(function (err) {
+            var post = new Model({
+                title: req.body.title,
+                description: req.body.description,
+                created_at: new Date(),
+                image: result.url,
+                image_id: result.public_id
+            });
+
+            post.save(function (err) {
                 if(err){
                     res.send(err)
                 }
                 res.redirect('/');
             });
-        }
-    );
+        });
 };
 
 
